@@ -1,0 +1,31 @@
+services:
+  dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        TZ: "Asia/Tokyo"
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=4096
+      - CLAUDE_CONFIG_DIR=/home/node/.claude
+      - POWERLEVEL9K_DISABLE_GITSTATUS=true
+    volumes:
+      - ..:/workspace:cached
+      - claude-code-bashhistory:/commandhistory
+      - claude-code-config:/home/node/.claude
+      - gh-config:/home/node/.config/gh
+    working_dir: /workspace
+    user: node
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+      - "8080:8080"
+      - "8000:8000"
+    stdin_open: true
+    tty: true
+    command: sleep infinity
+
+volumes:
+  claude-code-bashhistory:
+  claude-code-config:
+  gh-config: 
